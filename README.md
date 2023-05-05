@@ -7,6 +7,7 @@ Jonhuel A. De León Hernandez
 
 
 Introduction:
+
 To carry out the project, an ESP32 microprocessor and an analog temperature sensor(LMT84) were used to read the ambient temperature. 
 One of the main goals was to demonstrate IoT knowledge by sending an HTTP request from the ESP32 microprocessor to a cloud instance 
 running on Node-Red. From the programming area, the C language was used, with the implementation of the MQTT library, which allows 
@@ -51,3 +52,25 @@ connects the ESP32 to the Wifi, (#include <PubSubClient.h>) is an MQTT library t
 in measured voltages caused by variation of ADC reference voltages (Vref) between chips.
 
 
+Node Red Implementation:
+
+To implement Node Red, we acquired a domain name (istheacon.space). Using Lightsail, a web server service provided by AWS (Amazon Web Services), we 
+were able to use a Virtual Machine with the Ubuntu operating system. Then this was used to host Node Red, to receive the MQTT data of the ESP32 and 
+display it on a Node Red-generated web page.
+
+The display web page with the table (Temp vs Time) can be accessed through the domain “istheacon.space:1880/ui”. The acronym UI stands for user 
+interface, this is where the user will be able to access in real time the temperature readings. As you may notice in Figure 5, there is a noticeable 
+change between reading, this is because it was placed in room temperature first and then in the fridge. This to prove that the temperature sensor is working correctly.
+
+Node Red Documentation:
+
+- Aedes MQTT broker: enables MQTT node functionality. 
+- MQTT-in Node: receives MQTT data from the ESP32 via the Lightsail Virtual Machine.
+- Function Nodes (Function 1, Function 2, Function 3): take msg.payload as input and use it as a parameter for a JavaScript function. These functions convert the MQTT voltage data of the ESP32 into temperature values using the data from Figure 1. Function 1 reformats the converted data to fit the 
+table node, Function 2 reformats the converted data to fit the graph node, and Function 3 debugs.
+- Table: presents the input data as a table on the web page.
+- Graph node: uses the input data as the y axis in a graph (the x axis is time by default).
+- Debug Node: displays the input data in the debugger tab of Node Red.
+- Inject Node: injects information to the display web page.
+- Template Node: prints the msg string for the display.
+- Get/temp Node: displays msg to webpage with readings.
