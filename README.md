@@ -62,11 +62,12 @@ The display web page with the table (Temp vs Time) can be accessed through the d
 interface, this is where the user will be able to access in real time the temperature readings. As you may notice in Figure 5, there is a noticeable 
 change between reading, this is because it was placed in room temperature first and then in the fridge. This to prove that the temperature sensor is working correctly.
 
+
 Node Red Documentation:
 
 - Aedes MQTT broker: enables MQTT node functionality. 
 - MQTT-in Node: receives MQTT data from the ESP32 via the Lightsail Virtual Machine.
-- Function Nodes (Function 1, Function 2, Function 3): take msg.payload as input and use it as a parameter for a JavaScript function. These functions convert the MQTT voltage data of the ESP32 into temperature values using the data from Figure 1. Function 1 reformats the converted data to fit the 
+- Function Nodes (Function 1, Function 2, Function 3): take msg.payload as input and use it as a parameter for a JavaScript function. These functions convert the MQTT voltage data of the ESP32 into temperature values using the data. Function 1 reformats the converted data to fit the 
 table node, Function 2 reformats the converted data to fit the graph node, and Function 3 debugs.
 - Table: presents the input data as a table on the web page.
 - Graph node: uses the input data as the y axis in a graph (the x axis is time by default).
@@ -74,3 +75,19 @@ table node, Function 2 reformats the converted data to fit the graph node, and F
 - Inject Node: injects information to the display web page.
 - Template Node: prints the msg string for the display.
 - Get/temp Node: displays msg to webpage with readings.
+
+
+Shortcut Implementation:
+
+The shortcut was created on the shortcut app from Apple. The private intelligent assistant known as Siri will be the one communicating the readings. It prompts a query for the user, then goes to the function in the domain http://istheacon.space:1880/temp?room and copies it to the clipboard. It gets the content and prompts a new query for continuity. At last it displays via sound and text the contents of the URL. The URL will include the temperature reading from the ESP32 and Node Red taken with the temperature sensor.
+
+
+Hardware Design:
+
+The ESP32 is configured with the temperature sensor (LMT84), the LED and a battery. The circuit connections were based on connecting an LED with a 220 
+ohm resistance to pin number 2 of the ESP32. We decided to use this pin to drive the LED since the GPIO02 can be configured as an input or output pin. 
+What we want with the LED is to show that everything is working. Also in the circuit we have a temperature sensor (LMT84) which is an analog sensor. 
+This sensor has three pins each of them has its functions. Pin 1 is connected to the 3.3v input. Pin 2 is the output, this is connected to GPIO32 or 
+ESP32. We decided to take this pin since our sensor is an analog one and this pin can be used for digital input/output or analog input. And finally 
+Pin 3 is used as ground to complete the circuit. Finally, we have a 9v battery to power the circuit to demonstrate that the system can operate independently without the need to be connected to the computer via USB.
+
