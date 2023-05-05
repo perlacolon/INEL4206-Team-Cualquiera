@@ -1,8 +1,8 @@
 # INEL4206-Team-Cualquiera
 
 Teammates:
-Edmarie Santana Camacho
-Perla N. Colón Marrero 
+Edmarie Santana Camacho,
+Perla N. Colón Marrero, 
 Jonhuel A. De León Hernandez
 
 
